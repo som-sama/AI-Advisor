@@ -3,7 +3,7 @@ import openai
 import jellyfish
 
 
-openai.api_key = "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"
+openai.api_key = ""
 
 question = "How should I spend my 20s?"
 speakers = []
