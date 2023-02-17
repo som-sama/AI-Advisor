@@ -5,7 +5,7 @@ import jellyfish
 
 openai.api_key = ""
 
-question = "How should I spend my 20s?"
+question = input("Ask your question \n")
 speakers = []
 convo = []
 
