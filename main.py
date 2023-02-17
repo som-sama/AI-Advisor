@@ -3,7 +3,7 @@ import openai
 import jellyfish
 
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 question = "How should I spend my 20s?"
 speakers = []
@@ -11,22 +11,22 @@ convo = []
 
 
 def getting_replies(actual_number):
-  global recent_prompt
+  global question
   names = [
     'Elon Musk', 'Naval Ravikant', 'Steve Jobs', 'Andrej Karpathy', 'George Hotz'
   ]
   for i in range(actual_number-1):
     response = people_convo(names)    
-    if jellyfish.jaro_distance(recent_prompt, response) < 0.7:
+    if jellyfish.jaro_distance(question, response) < 0.7:
       convo.append(response)
-      recent_prompt = response
+      question = response
     else:
       break
 
 
 
 def people_convo(names):
-  global recent_prompt 
+  global question
   name = names[np.random.choice(len(names))]
   max_messages = 3
   if speakers[-1 * max_messages:].count(name) == max_messages:
@@ -52,7 +52,7 @@ def people_convo(names):
   prompt = """
   The startup founders %s are having a long text conversation to exclusively answer my questions. This is the summary of the conversation %s. This is the last text %s. %s had a response, and they said:
   """ % (names_string
-         , convo_summary, recent_prompt, name)
+         , convo_summary, question, name)
 
 
   #generating a response using openAI API
@@ -71,6 +71,9 @@ def people_convo(names):
   print("""%s said %s""" % (name, recent_response))
 
   return recent_response
-
-
   
+def run(number_of_messages):
+  actual_number = np.random.choice(number_of_messages)
+  getting_replies(actual_number)
+  
+run(10)
